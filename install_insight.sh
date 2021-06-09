@@ -38,6 +38,8 @@ then
 
                 echo "Hostname: " $HOSTNAME
 
+                echo "Port: " $PORT
+
                 read -p "Install InvGate Insight ? (no/YES): " INSTALL_RES
 
                 case ${INSTALL_RES,,} in 
