@@ -17,12 +17,11 @@ then
         read -p "Enter server ip address: " IP_ADDRESS
         if ipcalc -cs $IP_ADDRESS
         then
-
-                read -p "Enter server hostname (invgate-insight.com): " HOSTNAME
-                if [ "$HOSTNAME" == "" ]
-                then
-                        HOSTNAME="invgate-insight.com"
-                fi
+                # read -p "Enter server hostname (invgate-insight.com): " HOSTNAME
+                # if [ "$HOSTNAME" == "" ]
+                # then
+                #         HOSTNAME="invgate-insight.com"
+                # fi
 
                 read -p "Enter server port (default: 80): " PORT
                 if [ "$PORT" == "" ]
@@ -34,9 +33,9 @@ then
                 echo "Please Validate the Information"
                 echo "================================="
 
-                echo "Server IP/DNS: " $IP_ADDRESS
+                echo "Server IP: " $IP_ADDRESS
 
-                echo "Hostname: " $HOSTNAME
+                # echo "Hostname: " $HOSTNAME
 
                 echo "Port: " $PORT
 
@@ -50,12 +49,12 @@ then
 
                 if [[ "$INSTALL" == "false" ]]
                 then
-                        echo "Saliendo"
+                        echo "Aborting Installation"
                         exit 2
                 fi
 
-                sed -i "s/::1.*/$IP_ADDRESS $HOSTNAME/g" /etc/hosts
-                hostnamectl set-hostname invgate-insight.com
+                # sed -i "s/::1.*/$IP_ADDRESS $HOSTNAME/g" /etc/hosts
+                # hostnamectl set-hostname invgate-insight.com
                 yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
                 yum install epel-release -y
                 yum install centos-release-scl -y
@@ -73,6 +72,11 @@ enabled=1
 gpgcheck=0
 EOL
                 yum install invgate-neo-assets -y
+                if [ "$?" != 0 ]
+                then
+                        echo "The installation failed"
+                        exit 2
+                fi
                 sed -i "s|ASSETS_DOMAIN.*|ASSETS_DOMAIN=http://$IP_ADDRESS:$PORT|g" /usr/share/invgate/neoassets/neo-assets/.env
                 sed -i "s|NEO_ASSETS_STATIC_URL.*|NEO_ASSETS_STATIC_URL=http://$IP_ADDRESS/static-front|g" /usr/share/invgate/neoassets/neo-assets/.env
 
@@ -81,12 +85,6 @@ EOL
                 echo "==============================" 
                 more /var/log/httpd/neo-assets-install.log | grep 'Your superadmin'
                 echo "=============================="
-                
-                if [ "$?" != 0 ]
-                then
-                        echo "The installation failed"
-                        exit 2
-                fi
         else
         echo "Please provide a valid IP Address."
         exit 1
