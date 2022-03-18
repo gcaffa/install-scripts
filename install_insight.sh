@@ -92,7 +92,6 @@ enabled=1
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG
 repo_gpgcheck = 1
-END
 EOL
         echo "[9] Finished"
 
