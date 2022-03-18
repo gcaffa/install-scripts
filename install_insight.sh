@@ -85,6 +85,14 @@ name=InvGate Packages
 baseurl=https://download.invgate.net/neoassets/packages/centos7/
 enabled=1
 gpgcheck=0
+[pgdg96]
+name=PostgreSQL 9.6 for RHEL / CentOS 7 - x86_64
+baseurl=https://yum-archive.postgresql.org/9.6/redhat/rhel-7-x86_64
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG
+repo_gpgcheck = 1
+END
 EOL
         echo "[9] Finished"
 
