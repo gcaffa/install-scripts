@@ -46,15 +46,7 @@ then
         fi
 
         echo "[1] Installing postgreesql"
-        touch /etc/yum.repos.d/pgdg-96.repo
-        tee -a /etc/yum.repos.d/pgdg-96.repo << END
-[pgdg96]
-name=PostgreSQL 9.6 RPMs for RHEL/CentOS 7
-baseurl=https://yum-archive.postgresql.org/9.6/redhat/rhel-7-x86_64
-enabled=1
-gpgcheck=0
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG
-END
+        yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
         echo "[1] Finished"
 
         echo "[2] Adding EPEL repo"
